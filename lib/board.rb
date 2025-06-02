@@ -17,11 +17,23 @@ class Board
 
     while index < positions.length    # On boucle tant qu'on n'a pas traité les 9 positions
       pos = positions[index]    # On récupère l’identifiant de case à la position actuelle (ex : "A1", "B2", etc.)
-      @cases[pos] = BoardCase.new(pos)    # On crée une nouvelle instance de BoardCase avec cet identifiant, et on l’ajoute au hash @cases
+      @cases[pos] = BoardCase.new(pos, " ")    # On crée une nouvelle instance de BoardCase avec cet identifiant, et on l’ajoute au hash @cases
       index += 1    # On incrémente le compteur pour passer à la case suivante
     end
 
     @count_turn = 0    # On initialise le compteur de tours à 0
+  end
+
+  def display_board
+    puts "    1    2    3   "
+    puts "  |....|....|....|"
+    puts "A |    |    |    |"
+    puts "  |....|....|....|"
+    puts "B |    |    |    |"
+    puts "  |....|....|....|"
+    puts "C |    |    |    |"
+    puts "  |....|....|....|"
+
   end
 
   def play_turn
@@ -33,3 +45,4 @@ class Board
   def victory?
     #TO DO : une méthode qui vérifie le plateau et indique s'il y a un vainqueur ou match nul
   end
+end
