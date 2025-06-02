@@ -11,17 +11,17 @@ class Board
                  "B1", "B2", "B3",
                  "C1", "C2", "C3"]
 
-     # Création d’un hash pour stocker les 9 cases
-    @cases = {}
+    @cases = {}  # Création d’un hash pour stocker les 9 cases
+
     index = 0  # On initialise un compteur à 0 pour parcourir le tableau positions
 
-    while index < positions.length    # Tant qu'on n’a pas atteint la fin du tableau
+    while index < positions.length    # On boucle tant qu'on n'a pas traité les 9 positions
       pos = positions[index]    # On récupère l’identifiant de case à la position actuelle (ex : "A1", "B2", etc.)
       @cases[pos] = BoardCase.new(pos)    # On crée une nouvelle instance de BoardCase avec cet identifiant, et on l’ajoute au hash @cases
       index += 1    # On incrémente le compteur pour passer à la case suivante
     end
 
-    @count_turn = 0    # On initialise le compteur de tours à 0 (aucun coup joué au début)
+    @count_turn = 0    # On initialise le compteur de tours à 0
   end
 
   def play_turn

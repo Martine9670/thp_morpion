@@ -26,7 +26,7 @@ class Game
     @status = "on going"
 
     # Choix du joueur courant (aléatoire)
-    @current_player = @player.sample
+    @current_player = @players.sample
   end
 
   def turn
