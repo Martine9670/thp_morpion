@@ -87,7 +87,7 @@ class Game
   def switch_player
   # Change le joueur courant : si c’est le premier, passe au deuxième, sinon inversement
     if @current_player == @players[0]
-      @current_player = @players[1]
+       @current_player = @players[1]
     else
       @current_player = @players[0]
     end
