@@ -40,17 +40,20 @@ class Board
     end
   end
 
-  def victory?(symbol)
-    win_combinations = [
-      ["A1", "A2", "A3"],
-      ["B1", "B2", "B3"],
-      ["C1", "C2", "C3"],
-      ["A1", "B1", "C1"],
-      ["A2", "B2", "C2"],
-      ["A3", "B3", "C3"],
-      ["A1", "B2", "C3"],
-      ["A3", "B2", "C1"]
-    ]
+def victory?(symbol)
+  # Définition de la méthode `victory?` qui prend en paramètre `symbol` (par exemple "X" ou "O")
+  # Cette méthode va vérifier si ce symbole a réussi à aligner 3 cases (et donc a gagné)
+
+      win_combinations = [   # Déclaration d’un tableau contenant toutes les combinaisons gagnantes possibles
+        ["A1", "A2", "A3"],  # Première ligne horizontale
+        ["B1", "B2", "B3"],  # Deuxième ligne horizontale
+        ["C1", "C2", "C3"],  # Troisième ligne horizontale
+        ["A1", "B1", "C1"],  # Première colonne verticale
+        ["A2", "B2", "C2"],  # Deuxième colonne verticale
+        ["A3", "B3", "C3"],  # Troisième colonne verticale
+        ["A1", "B2", "C3"],  # Diagonale de haut gauche à bas droite
+        ["A3", "B2", "C1"]   # Diagonale de haut droite à bas gauche
+      ]
 
       i = 0       # Initialisation d'un compteur pour parcourir les combinaisons gagnantes
       while i < win_combinations.length   # Boucle tant qu'il reste des combinaisons à vérifier
