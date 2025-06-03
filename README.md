@@ -1,4 +1,4 @@
-🎮 Morpion - Tic Tac Toe Game in Ruby
+# 🎮 Morpion - Tic Tac Toe Game in Ruby # 
 
 Welcome to Morpion, a simple command-line Tic Tac Toe game (also known as "XO" or "Morpion") lovingly coded in Ruby. ❤️
 📋 Features
@@ -15,8 +15,12 @@ Welcome to Morpion, a simple command-line Tic Tac Toe game (also known as "XO" o
 
     🎯 Move validity checking
 
-### Author: Martine PINNA
-### Github: Martine9670
-### Discord: Martine PINNA
+    ----
+
+Author: Martine PINNA
+
+Github: Martine9670
+
+Discord: Martine PINNA
 
 
