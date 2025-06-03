@@ -35,23 +35,29 @@ class Game
     #TO DO : méthode faisant appel aux méthodes des autres classes (notamment à l'instance de Board). 
             # Elle affiche le plateau, demande au joueur ce qu'il joue, vérifie si un joueur a gagné, 
             # passe au joueur suivant si la partie n'est pas finie.
-    Show.new.show_board(@board)                # Affiche le plateau actuel grâce à la classe Show
+    Show.new.show_board(@board)     # Affiche le plateau actuel grâce à la classe Show
 
     puts "\n#{@current_player.name} (#{@current_player.value}), c'est ton tour !"  # Affiche le nom du joueur courant et sa marque (X ou O)
 
-    print "\nChoisis une case (ex : A1, B2...) : ".yellow
-    choice = gets.chomp.upcase                # Récupère la saisie du joueur et la met en majuscules
+    print "\nChoisis une case (ex : A1, B2...) ou Q pour quitter le jeu : ".yellow
+    choice = gets.chomp.upcase    # Récupère la saisie du joueur et la met en majuscules
 
-    if @board.cases[choice] && @board.cases[choice].value == " "     # Vérifie que la case existe et qu'elle est vide
+      if choice.nil? || choice == "Q" || choice == "QUITTER"   # Option : quitter le jeu
 
-      @board.cases[choice].value = @current_player.value   # Remplit la case avec le symbole du joueur
+        puts "\nOuais, va voir ailleurs si j'y suis !! 👋".light_red
+        exit
+      end
+
+      if @board.cases[choice] && @board.cases[choice].value == " "     # Vérifie que la case existe et qu'elle est vide
+
+         @board.cases[choice].value = @current_player.value   # Remplit la case avec le symbole du joueur
 
       if @board.victory?(@current_player.value)       # Vérifie s'il y a une victoire avec cette grille
 
-        @status = @current_player   # On stocke le gagnant dans @status (qui peut être un joueur ou "draw")
+         @status = @current_player   # On stocke le gagnant dans @status (qui peut être un joueur ou "draw")
 
       elsif @board.full?
-        @status = "draw"   # S'il n'y a plus de cases libres, et pas de gagnant → match nul
+         @status = "draw"   # S'il n'y a plus de cases libres, et pas de gagnant → match nul
 
       else
         switch_player    # Sinon, on change de joueur

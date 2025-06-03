@@ -1,21 +1,43 @@
 require 'colorize'
 
 class Show
-  # Méthode qui affiche le plateau de jeu passé en argument (un objet Board)
   def show_board(board)
-    puts "    1   2   3 "   # Affiche l'en-tête des colonnes numérotées 1 à 3
-    puts "  -------------"  # Affiche une ligne de séparation horizontale
+    # Affiche l'en-tête des colonnes
+    puts "    1   2   3 "
+    puts "  -------------"
 
-    # Affiche la ligne A avec les valeurs des cases A1, A2, A3 du plateau
-    puts "A | #{board.cases['A1'].value} | #{board.cases['A2'].value} | #{board.cases['A3'].value} |"
-    puts "  -------------"  # Ligne de séparation
+    # Les lignes A, B, C sont stockées dans un tableau
+    row_labels = ['A', 'B', 'C']
+    row_label_index = 0
 
-    # Affiche la ligne B avec les valeurs des cases B1, B2, B3 du plateau
-    puts "B | #{board.cases['B1'].value} | #{board.cases['B2'].value} | #{board.cases['B3'].value} |"
-    puts "  -------------"  # Ligne de séparation
+    # Boucle sur chaque ligne (A, B, C)
+    while row_label_index < row_labels.length
+      row_label = row_labels[row_label_index]  # Par exemple, 'A'
 
-    # Affiche la ligne C avec les valeurs des cases C1, C2, C3 du plateau
-    puts "C | #{board.cases['C1'].value} | #{board.cases['C2'].value} | #{board.cases['C3'].value} |"
-    puts "  -------------"  # Ligne de séparation finale
+      print "#{row_label} |"  # Affiche 'A |' en bleu
+
+      column_number = 1
+      # Boucle sur les colonnes (1, 2, 3)
+      while column_number <= 3
+        # Récupère la valeur de la case, comme 'A1', 'A2', etc.
+        case_value = board.cases["#{row_label}#{column_number}"].value
+
+      # Applique une couleur selon la valeur de la case
+        colored_value = case case_value
+          when 'X' then case_value.cyan
+          when 'O' then case_value.magenta
+          else case_value
+          end
+
+        # Affiche la case colorée
+        print " #{colored_value} |"       
+        
+        column_number += 1
+      end
+
+      puts  # saut de lignes
+      puts "  -------------"
+      row_label_index += 1
+    end
   end
 end
