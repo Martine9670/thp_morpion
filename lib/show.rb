@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Show
   # Méthode qui affiche le plateau de jeu passé en argument (un objet Board)
   def show_board(board)

@@ -1,6 +1,7 @@
 require_relative 'board'
 require_relative 'player'
 require_relative 'show'
+require 'colorize'
 
 class Game
   #TO DO : la classe a plusieurs attr_accessor: le current_player (égal à un objet Player), 
@@ -38,7 +39,7 @@ class Game
 
     puts "\n#{@current_player.name} (#{@current_player.value}), c'est ton tour !"  # Affiche le nom du joueur courant et sa marque (X ou O)
 
-    print "Choisis une case (ex : A1, B2...) : "
+    print "Choisis une case (ex : A1, B2...) : ".yellow
     choice = gets.chomp.upcase                # Récupère la saisie du joueur et la met en majuscules
 
     if @board.cases[choice] && @board.cases[choice].value == " "     # Vérifie que la case existe et qu'elle est vide
@@ -54,7 +55,7 @@ class Game
         switch_player               # Sinon, on change de joueur
       end
     else
-      puts "⛔️ Case invalide ou déjà prise. Réessaie..."
+      puts "⛔️ Case invalide ou déjà prise. Réessaie...".blue
       sleep(1.5)                    # Petite pause pour laisser le joueur lire l'erreur
     end
   end
@@ -70,12 +71,12 @@ class Game
     
     Show.new.show_board(@board)       # Crée une nouvelle instance de Show et affiche le plateau actuel (@board)
 
-    puts "\nFin de la partie !"        # Affiche un message indiquant que la partie est terminée avec un saut de ligne
+    puts "\nFin de la partie !".red       # Affiche un message indiquant que la partie est terminée avec un saut de ligne
 
     if @status == "draw"               # Vérifie si le statut du jeu est égal à "draw", c’est-à-dire un match nul
       puts "Match nul !"               # Si c’est un match nul, affiche ce message
     else
-      puts "Bravo #{@status.name}, tu as gagné !"  # Sinon, affiche un message de félicitations avec le nom du joueur gagnant (l’objet @status contient le joueur gagnant)
+      puts "Bravo #{@status.name}, tu as gagné !".magenta # Sinon, affiche un message de félicitations avec le nom du joueur gagnant (l’objet @status contient le joueur gagnant)
     end
   end
 
