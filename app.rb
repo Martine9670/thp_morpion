@@ -3,6 +3,7 @@ require_relative './lib/boardcase'
 require_relative './lib/game'
 require_relative './lib/player'
 require_relative './lib/show'
+require 'colorize'
 
 puts "\nBienvenue dans le jeu du Morpion ! 🎮".magenta
 game = Game.new
