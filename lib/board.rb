@@ -25,24 +25,72 @@ class Board
   end
 
   def display_board
-    puts "    1    2    3   "
-    puts "  |....|....|....|"
-    puts "A |    |    |    |"
-    puts "  |....|....|....|"
-    puts "B |    |    |    |"
-    puts "  |....|....|....|"
-    puts "C |    |    |    |"
-    puts "  |....|....|....|"
+    puts "    1    2    3   "   # Affiche les numéros de colonnes en haut du tableau
+    puts "  |....|....|....|"   # Affiche une ligne de séparation sous les numéros de colonnes
 
+    ["A", "B", "C"].each do |row|   # Pour chaque ligne du plateau (A, B et C)
+      print "#{row} |"     # Affiche la lettre de la ligne suivie d'une barre verticale pour commencer la ligne
+
+      (1..3).each do |col|    # Pour chaque colonne (1 à 3) de la ligne courante
+        pos = "#{row}#{col}"  # Construit la clé correspondant à la case (ex: "A1", "B3")
+        print " #{@cases[pos].value}  |"  # Affiche la valeur de la case (X, O ou espace) entourée d’espaces et d’une barre verticale
+      end
+
+      puts "\n  |....|....|....|"   # Passe à la ligne suivante et affiche une ligne de séparation sous la ligne affichée
+    end
   end
 
-  def play_turn
-    #TO DO : une méthode qui :
-    #1) demande au bon joueur ce qu'il souhaite faire
-    #2) change la BoardCase jouée en fonction de la valeur du joueur (X ou O)
-  end
+  def victory?(symbol)
+    win_combinations = [
+      ["A1", "A2", "A3"],
+      ["B1", "B2", "B3"],
+      ["C1", "C2", "C3"],
+      ["A1", "B1", "C1"],
+      ["A2", "B2", "C2"],
+      ["A3", "B3", "C3"],
+      ["A1", "B2", "C3"],
+      ["A3", "B2", "C1"]
+    ]
 
-  def victory?
-    #TO DO : une méthode qui vérifie le plateau et indique s'il y a un vainqueur ou match nul
+      i = 0       # Initialisation d'un compteur pour parcourir les combinaisons gagnantes
+      while i < win_combinations.length   # Boucle tant qu'il reste des combinaisons à vérifier
+        combo = win_combinations[i]   # On récupère la combinaison courante (ex: ["A1", "A2", "A3"])
+
+        # Vérifier si toutes les cases de la combinaison ont la valeur 'symbol'
+        count = 0     # Initialisation d'un compteur pour parcourir les cases de la combinaison
+        all_match = true    # On suppose que toutes les cases correspondent au symbole tant qu'on ne trouve pas le contraire
+        
+        while count < combo.length    # Boucle tant qu'il reste des cases à vérifier dans la combinaison
+          pos = combo[count]     # On récupère la position de la case courante (ex: "A1")
+          
+          if @cases[pos].value != symbol  # Si la valeur de cette case n'est pas égale au symbole du joueur
+            all_match = false     # On marque que cette combinaison ne correspond pas à une victoire
+            
+            break     # On sort de la boucle interne car une seule différence suffit à invalider la combinaison
+          end
+          count += 1    # On passe à la case suivante dans la combinaison
+        end
+
+        return true if all_match   # Si toutes les cases correspondent, on retourne true (victoire détectée)
+        i += 1   # On passe à la combinaison suivante
+      end
+
+      return false  # Aucune combinaison gagnante trouvée
+    end
+  def full?
+    i = 0      # On initialise un compteur à 0 pour parcourir les cases du plateau
+    keys = @cases.keys   # On récupère toutes les clés (positions comme "A1", "B2", etc.) du hash @cases
+
+    while i < keys.length   # Tant qu’on n’a pas parcouru toutes les positions
+      key = keys[i]       # On récupère la position actuelle (ex: "A1")
+      
+      if @cases[key].value == " "    # Si la valeur de cette case est vide (donc non jouée)
+        return false    # Alors la grille n’est pas encore pleine, on retourne false immédiatement
+      end
+
+      i += 1     # Sinon, on passe à la position suivante en incrémentant le compteur
+    end
+
+    return true  # Si on a vérifié toutes les cases et qu’aucune n’est vide, la grille est pleine → on retourne true
   end
 end

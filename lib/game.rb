@@ -1,5 +1,6 @@
 require_relative 'board'
 require_relative 'player'
+require_relative 'show'
 
 class Game
   #TO DO : la classe a plusieurs attr_accessor: le current_player (égal à un objet Player), 
@@ -33,14 +34,57 @@ class Game
     #TO DO : méthode faisant appelle aux méthodes des autres classes (notamment à l'instance de Board). 
             # Elle affiche le plateau, demande au joueur ce qu'il joue, vérifie si un joueur a gagné, 
             # passe au joueur suivant si la partie n'est pas finie.
+    Show.new.show_board(@board)                # Affiche le plateau actuel grâce à la classe Show
+
+    puts "\n#{@current_player.name} (#{@current_player.value}), c'est ton tour !"  # Affiche le nom du joueur courant et sa marque (X ou O)
+
+    print "Choisis une case (ex : A1, B2...) : "
+    choice = gets.chomp.upcase                # Récupère la saisie du joueur et la met en majuscules
+
+    if @board.cases[choice] && @board.cases[choice].value == " "     # Vérifie que la case existe et qu'elle est vide
+
+      @board.cases[choice].value = @current_player.value   # Remplit la case avec le symbole du joueur
+
+      if @board.victory?(@current_player.value)       # Vérifie s'il y a une victoire avec cette grille
+
+        @status = @current_player   # On stocke le gagnant dans @status (qui peut être un joueur ou "draw")
+      elsif @board.full?
+        @status = "draw"            # S'il n'y a plus de cases libres, et pas de gagnant → match nul
+      else
+        switch_player               # Sinon, on change de joueur
+      end
+    else
+      puts "⛔️ Case invalide ou déjà prise. Réessaie..."
+      sleep(1.5)                    # Petite pause pour laisser le joueur lire l'erreur
+    end
   end
 
   def new_round
     # TO DO : relance une partie en initialisant un nouveau board mais en gardant les mêmes joueurs.
+    @board = Board.new
+    @status = "on going"
+    @current_player = @players.sample
   end
 
   def game_end
-    # TO DO : permet l'affichage de fin de partie quand un vainqueur est détecté ou si il y a match nul
-  end    
+    
+    Show.new.show_board(@board)       # Crée une nouvelle instance de Show et affiche le plateau actuel (@board)
 
+    puts "\nFin de la partie !"        # Affiche un message indiquant que la partie est terminée avec un saut de ligne
+
+    if @status == "draw"               # Vérifie si le statut du jeu est égal à "draw", c’est-à-dire un match nul
+      puts "Match nul !"               # Si c’est un match nul, affiche ce message
+    else
+      puts "Bravo #{@status.name}, tu as gagné !"  # Sinon, affiche un message de félicitations avec le nom du joueur gagnant (l’objet @status contient le joueur gagnant)
+    end
+  end
+
+  def switch_player
+  # Change le joueur courant : si c’est le premier, passe au deuxième, sinon inversement
+    if @current_player == @players[0]
+      @current_player = @players[1]
+    else
+      @current_player = @players[0]
+    end
+  end
 end
